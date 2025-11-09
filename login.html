@@ -234,11 +234,12 @@
             <p class="text-gray-300">Access your account and journey details</p>
           </div>
 
-          <form class="space-y-6">
+          <form id="loginForm" class="space-y-6">
             <div>
               <label class="block text-gray-300 mb-2">Email Address</label>
               <input
                 type="email"
+                id="emailInput"
                 class="form-input w-full px-4 py-3"
                 placeholder="Enter your email"
               />
@@ -248,10 +249,13 @@
               <label class="block text-gray-300 mb-2">Password</label>
               <input
                 type="password"
+                id="passwordInput"
                 class="form-input w-full px-4 py-3"
                 placeholder="Enter your password"
               />
             </div>
+
+            <div id="errorMessage" class="text-sm text-red-400"></div>
 
             <div class="flex items-center justify-between">
               <div class="flex items-center">
