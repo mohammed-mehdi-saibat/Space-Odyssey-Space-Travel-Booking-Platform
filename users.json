@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "email": "voyager@space.com",
+    "password": "Password123",
+    "username": "SpaceVoyager1",
+    "firstName": "Alpha",
+    "isLoggedIn": false
+  },
+  {
+    "id": 2,
+    "email": "beta@space.com",
+    "password": "Secure123",
+    "username": "BetaExplorer",
+    "firstName": "Beta",
+    "isLoggedIn": false
+  },
+  {
+    "id": 3,
+    "email": "guest@space.com",
+    "password": "Guest1234",
+    "username": "GuestStar",
+    "firstName": "Guest",
+    "isLoggedIn": false
+  },
+  {
+    "id": 4,
+    "email": "lunar@moon.com",
+    "password": "Moonbase1",
+    "username": "LunarTraveler",
+    "firstName": "Luna",
+    "isLoggedIn": false
+  },
+  {
+    "id": 5,
+    "email": "mars@redplanet.com",
+    "password": "Reddust1",
+    "username": "MarsRover",
+    "firstName": "Elon",
+    "isLoggedIn": false
+  },
+  {
+    "id": 6,
+    "email": "station@orbital.net",
+    "password": "Orbital88",
+    "username": "OrbitalPilot",
+    "firstName": "Leo",
+    "isLoggedIn": false
+  }
+]
