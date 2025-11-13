@@ -124,7 +124,7 @@
       }
     </style>
   </head>
-  <body class="text-white font-exo min-h-screen">
+  <body class="text-white font-exo min-h-screen" id="body8">
     <!-- Stars Background -->
     <div id="stars-container"></div>
 
@@ -170,6 +170,7 @@
           <a
             href="login.html"
             class="nav-link hover:text-neon-blue transition-colors"
+            id="LoginID"
             >Login</a
           >
         </div>
@@ -211,6 +212,7 @@
           <a
             href="login.html"
             class="hover:text-neon-blue transition-colors py-2"
+            id="LoginID"
             >Login</a
           >
         </div>
@@ -270,7 +272,8 @@
             </div>
 
             <button
-              type="submit"
+              id="submitButton"
+              type="button"
               class="btn-primary text-white w-full py-3 rounded-lg font-bold glow"
             >
               Login to Account
@@ -412,5 +415,6 @@
       });
     </script>
     <script src="login.js"></script>
+    <script src="session.js"></script>
   </body>
 </html>
