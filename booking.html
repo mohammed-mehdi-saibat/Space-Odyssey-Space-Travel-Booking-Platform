@@ -248,11 +248,7 @@
                   >Destination</label
                 >
                 <select id="destination" class="form-input px-4 py-3 pr-10">
-                  <option>Select your destination</option>
-                  <option>The Moon</option>
-                  <option>Mars</option>
-                  <option>Europa (Jupiter's Moon)</option>
-                  <option>Titan (Saturn's Moon)</option>
+                  <option value="">Select your destination</option>
                 </select>
                 <i
                   class="fas fa-globe-americas text-neon-cyan absolute right-3 top-[43px] pointer-events-none"
@@ -272,6 +268,13 @@
                   onblur="(this.type='text')"
                 />
               </div>
+            </div>
+
+            <!-- Package Section -->
+            <div id="package-section" class="mb-6">
+              <p class="text-gray-300">
+                Please select a destination to see packages
+              </p>
             </div>
 
             <div class="mb-6">
@@ -563,5 +566,6 @@
       });
     </script>
     <script src="session.js"></script>
+    <script src="booking.js"></script>
   </body>
 </html>
