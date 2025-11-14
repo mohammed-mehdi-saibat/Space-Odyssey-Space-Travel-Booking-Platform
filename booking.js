@@ -300,7 +300,7 @@ function showSuccessMessage(bookingId) {
         <p class="text-gray-300 mb-2">Your space journey is confirmed!</p>
         <p class="text-sm text-gray-400 mb-4">ID: ${bookingId}</p>
         <button onclick="goHome()" class="btn-primary px-6 py-2">
-          Back to Home
+          Back to Booking
         </button>
       </div>
     </div>
@@ -311,5 +311,5 @@ function showSuccessMessage(bookingId) {
 }
 
 function goHome() {
-  window.location.href = "index.html";
+  window.location.href = "bookings.html";
 }
