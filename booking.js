@@ -298,7 +298,7 @@ function showSuccessMessage(bookingId) {
         <div style="color: green; font-size: 40px; margin-bottom: 10px;">✓</div>
         <h3 style="color: green; margin-bottom: 10px;">Booking Confirmed!</h3>
         <p style="color: white; margin-bottom: 10px;">Your space journey is booked!</p>
-        <p style="color: lightgray; font-size: 14px; margin-bottom: 15px;">ID: ${bookingId}</p>
+        <p style="color: lightgray; font-size: 14px; margin-bottom: 15px;">ID: ${bookingId}</p>1
         <div style="display: flex; gap: 10px; justify-content: center;">
           <button onclick="goHome()" style="background: #0ea5e9; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
             My Bookings
