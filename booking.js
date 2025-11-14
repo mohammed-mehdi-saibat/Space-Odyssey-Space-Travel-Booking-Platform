@@ -293,15 +293,20 @@ function saveBooking() {
 
 function showSuccessMessage(bookingId) {
   const successHTML = `
-    <div class="text-center p-8">
-      <div class="bg-green-500/20 border border-green-500 rounded-lg p-6 inline-block">
-        <i class="fas fa-check-circle text-green-400 text-4xl mb-3"></i>
-        <h3 class="font-orbitron text-xl text-green-400 mb-2">Booking Saved!</h3>
-        <p class="text-gray-300 mb-2">Your space journey is confirmed!</p>
-        <p class="text-sm text-gray-400 mb-4">ID: ${bookingId}</p>
-        <button onclick="goHome()" class="btn-primary px-6 py-2">
-          Back to Booking
-        </button>
+    <div style="text-align: center; padding: 20px;">
+      <div style="background: rgba(34, 197, 94, 0.2); border: 1px solid green; border-radius: 10px; padding: 20px; display: inline-block;">
+        <div style="color: green; font-size: 40px; margin-bottom: 10px;">✓</div>
+        <h3 style="color: green; margin-bottom: 10px;">Booking Confirmed!</h3>
+        <p style="color: white; margin-bottom: 10px;">Your space journey is booked!</p>
+        <p style="color: lightgray; font-size: 14px; margin-bottom: 15px;">ID: ${bookingId}</p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button onclick="goHome()" style="background: #0ea5e9; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+            My Bookings
+          </button>
+          <button onclick="showTicketModal('${bookingId}')" style="background: transparent; border: 1px solid #0ea5e9; color: #0ea5e9; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+            View Ticket
+          </button>
+        </div>
       </div>
     </div>
   `;
@@ -312,4 +317,89 @@ function showSuccessMessage(bookingId) {
 
 function goHome() {
   window.location.href = "bookings.html";
+}
+
+function showTicketModal(bookingId) {
+  const bookings = JSON.parse(localStorage.getItem("spaceBookings") || "[]");
+  const booking = bookings.find((b) => b.id === bookingId);
+
+  if (!booking) {
+    alert("Ticket not found!");
+    return;
+  }
+
+  const modalHTML = `
+        <div id="ticketModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+            <div style="background: white; padding: 20px; border-radius: 10px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+                <!-- Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+                    <h2 style="margin: 0; color: black; font-family: Orbitron;">SpaceVoyager Ticket</h2>
+                    <button onclick="closeTicketModal()" style="background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+                </div>
+                
+                <!-- Ticket Content -->
+                <div style="color: black;">
+                    <!-- Passenger Info -->
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: #0ea5e9; margin-bottom: 10px;">Passenger</h3>
+                        <p><strong>Name:</strong> ${booking.firstName} ${
+    booking.lastName
+  }</p>
+                        <p><strong>Email:</strong> ${booking.email}</p>
+                        <p><strong>Passengers:</strong> ${
+                          booking.passengers
+                        }</p>
+                    </div>
+                    
+                    <!-- Journey Info -->
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="color: #0ea5e9; margin-bottom: 10px;">Journey</h3>
+                        <p><strong>Destination:</strong> ${getDestName(
+                          booking.destination
+                        )}</p>
+                        <p><strong>Departure:</strong> ${
+                          booking.departureDate
+                        }</p>
+                        <p><strong>Status:</strong> <span style="color: green; font-weight: bold;">CONFIRMED</span></p>
+                    </div>
+                    
+                    <!-- Price -->
+                    <div style="background: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                        <p style="margin: 0;"><strong>Total Price:</strong> $${booking.totalPrice.toLocaleString()}</p>
+                        <p style="margin: 0;"><strong>Booking ID:</strong> ${
+                          booking.id
+                        }</p>
+                    </div>
+                    
+                    <!-- Print Button -->
+                    <button onclick="printThisTicket()" style="background: #0ea5e9; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%;">
+                        Print Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+}
+
+function getDestName(destId) {
+  const names = {
+    moon: "The Moon",
+    mars: "Mars",
+    europa: "Europa",
+    titan: "Titan",
+    "orbital-station": "Orbital Station",
+    "venus-clouds": "Venus Cloud Cities",
+  };
+  return names[destId] || destId;
+}
+
+function closeTicketModal() {
+  const modal = document.getElementById("ticketModal");
+  if (modal) modal.remove();
+}
+
+function printThisTicket() {
+  window.print();
 }
