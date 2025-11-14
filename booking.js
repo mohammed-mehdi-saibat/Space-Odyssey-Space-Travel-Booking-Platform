@@ -164,7 +164,6 @@ function updatePriceDisplay(price) {
   console.log("Current booking:", currentBooking);
 }
 
-// FORM VALIDATION FUNCTIONS
 function setupFormValidation() {
   const submitButton = document.querySelector('button[type="submit"]');
 
@@ -224,7 +223,7 @@ function validateForm() {
   }
 
   if (isValid) {
-    alert("Form is valid! Ready to book your space journey.");
+    saveBooking();
   }
 
   return isValid;
@@ -263,4 +262,54 @@ function clearErrors() {
       field.errorDiv = null;
     }
   });
+}
+
+function saveBooking() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  const booking = {
+    id: "booking_" + Date.now(),
+    userId: user.id,
+    firstName: document.getElementById("first-name").value,
+    lastName: document.getElementById("last-name").value,
+    email: document.getElementById("email").value,
+    destination: currentBooking.destination,
+    passengers: currentBooking.passengers,
+    totalPrice: currentBooking.totalPrice,
+    departureDate: document.getElementById("departure-date").value,
+    bookingDate: new Date().toLocaleDateString(),
+  };
+
+  const existingBookings = JSON.parse(
+    localStorage.getItem("spaceBookings") || "[]"
+  );
+
+  existingBookings.push(booking);
+
+  localStorage.setItem("spaceBookings", JSON.stringify(existingBookings));
+
+  showSuccessMessage(booking.id);
+}
+
+function showSuccessMessage(bookingId) {
+  const successHTML = `
+    <div class="text-center p-8">
+      <div class="bg-green-500/20 border border-green-500 rounded-lg p-6 inline-block">
+        <i class="fas fa-check-circle text-green-400 text-4xl mb-3"></i>
+        <h3 class="font-orbitron text-xl text-green-400 mb-2">Booking Saved!</h3>
+        <p class="text-gray-300 mb-2">Your space journey is confirmed!</p>
+        <p class="text-sm text-gray-400 mb-4">ID: ${bookingId}</p>
+        <button onclick="goHome()" class="btn-primary px-6 py-2">
+          Back to Home
+        </button>
+      </div>
+    </div>
+  `;
+
+  const form = document.querySelector("form");
+  form.innerHTML = successHTML;
+}
+
+function goHome() {
+  window.location.href = "index.html";
 }
