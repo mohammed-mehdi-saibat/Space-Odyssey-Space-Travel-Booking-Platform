@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("Booking page loaded!");
   loadDestinations();
   setupPriceCalculators();
+  setupFormValidation();
 });
 
 function loadDestinations() {
@@ -96,21 +97,17 @@ function setupPriceCalculators() {
     });
   });
 
-  // Accommodation selection with visual feedback
   const accommodationOptions = document.querySelectorAll(
     ".accommodation-option"
   );
   accommodationOptions.forEach((option) => {
     option.addEventListener("click", function () {
-      // Remove selected class from all options
       document.querySelectorAll(".accommodation-option").forEach((opt) => {
         opt.classList.remove("selected");
       });
 
-      // Add selected class to clicked option
       this.classList.add("selected");
 
-      // Find the radio input and trigger change
       const radio = this.querySelector('input[type="radio"]');
       if (radio) {
         radio.checked = true;
@@ -120,7 +117,6 @@ function setupPriceCalculators() {
     });
   });
 
-  // Set initial accommodation
   const defaultAccommodation = document.querySelector(
     'input[name="cabin"]:checked'
   );
@@ -166,4 +162,105 @@ function updatePriceDisplay(price) {
 
   currentBooking.totalPrice = price;
   console.log("Current booking:", currentBooking);
+}
+
+// FORM VALIDATION FUNCTIONS
+function setupFormValidation() {
+  const submitButton = document.querySelector('button[type="submit"]');
+
+  if (submitButton) {
+    submitButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      validateForm();
+    });
+  }
+}
+
+function validateForm() {
+  clearErrors();
+
+  let isValid = true;
+
+  const firstName = document.getElementById("first-name");
+  const lastName = document.getElementById("last-name");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
+  const date = document.getElementById("departure-date");
+
+  if (!firstName.value) {
+    showError(firstName, "First name is required");
+    isValid = false;
+  }
+
+  if (!lastName.value) {
+    showError(lastName, "Last name is required");
+    isValid = false;
+  }
+
+  if (!email.value) {
+    showError(email, "Email is required");
+    isValid = false;
+  } else if (!isValidEmail(email.value)) {
+    showError(email, "Please enter a valid email");
+    isValid = false;
+  }
+
+  if (!phone.value) {
+    showError(phone, "Phone number is required");
+    isValid = false;
+  } else if (!isValidPhone(phone.value)) {
+    showError(phone, "Please enter a valid phone number");
+    isValid = false;
+  }
+
+  if (!date.value) {
+    showError(date, "Departure date is required");
+    isValid = false;
+  }
+
+  if (!currentBooking.destination) {
+    alert("Please select a destination");
+    isValid = false;
+  }
+
+  if (isValid) {
+    alert("Form is valid! Ready to book your space journey.");
+  }
+
+  return isValid;
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isValidPhone(phone) {
+  const phoneRegex =
+    /^(06|07)[\s]?[\d]{2}[\s]?[\d]{2}[\s]?[\d]{2}[\s]?[\d]{2}$/;
+  return phoneRegex.test(phone);
+}
+
+function showError(field, message) {
+  field.style.borderColor = "red";
+
+  const errorDiv = document.createElement("div");
+  errorDiv.style.color = "red";
+  errorDiv.style.fontSize = "14px";
+  errorDiv.style.marginTop = "5px";
+  errorDiv.textContent = message;
+
+  field.parentNode.appendChild(errorDiv);
+  field.errorDiv = errorDiv;
+}
+
+function clearErrors() {
+  const fields = document.querySelectorAll(".form-input");
+  fields.forEach((field) => {
+    field.style.borderColor = "";
+    if (field.errorDiv) {
+      field.errorDiv.remove();
+      field.errorDiv = null;
+    }
+  });
 }
